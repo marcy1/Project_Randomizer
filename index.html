@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>	
+<style>
+	.pane{
+		width: 100vw;
+		height: 100vh;
+		border: none;
+		background: transparent;
+  		opacity: 1;
+		transition: .5s ease;
+		font-size: 10vw;
+		color: white;
+	}
+	.pane:hover{
+		opacity: .5;
+		background-color: white;
+	}
+	.pane:active{
+		transition: .1s ease;
+		opacity: 1;
+	}
+	.back{
+		background-size: cover;
+		display: block;
+		margin: auto;
+	}
+	</style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript">
+	var myTitle
+	var jsoncount = 0;
+	var proj = [];
+	var img = [];
+	var img_string = "background.png";
+
+	$.getJSON("proj.json", function(json){  
+	// This while loop stops when a title in the json file is undefined. Look at json file to understand
+		while(typeof json["proj" + jsoncount] != "undefined"){
+		// fills proj array with data from the json file 
+		proj.push(json["proj" + jsoncount]["proj_name"]);
+		// fills img_name with data from the json file	     
+        	img.push(json["proj" + jsoncount]["img_name"]);		     
+		jsoncount++;
+		}
+       	});
+		
+	// callArray calls the arrays that were filled in the function fill() and prints them out randomly
+	function callArray(){	
+		var random = Math.floor(Math.random()*jsoncount)
+		// Sets the element by the id Button to a random index in the proj array
+		document.getElementById("Button").value = proj[random];
+		// Changes body's background by accessing a random index in the img array that has strings stored inside of it 	
+		document.body.background = img[random];	
+	}
+	</script>	
+	<body class="back" style="background-color:black;">
+		<input type="Button" id = "Button" class="pane" value="Find an Assignment" onClick="callArray()"/>
+	</body>
+</html>
